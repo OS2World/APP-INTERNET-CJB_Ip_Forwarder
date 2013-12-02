@@ -1,0 +1,55 @@
+echo
+echo "Welcome to CBJ ip forwardin'client by wC (version 1.0b)"
+echo
+echo "This is a script to help you compiling your client =)"
+echo "Please answer the following questions..."
+echo
+echo "*Instalation type*"
+echo
+echo "a) normal ---> just compiles the client"
+echo "b) auto   ---> enables *auto* forwarding (on boot)"
+echo
+echo "Choice> "; read choice
+if test "$choice" = "a" -o "$choice" = "A"
+then
+   echo "Making Makefile..."
+   rm -rf Makefile
+   echo "# Automatic makefile, made by configure script!" >> Makefile
+   echo "all:" >> Makefile
+   echo "	rm -rf core cjbclient" >> Makefile
+   echo "	cc cjbclient.c -o cjbclient" >> Makefile
+   echo "Makefile done! =) Type 'make' to start compiling"
+   echo "And then exec: ./cjbclient <username> <password> to start client!"
+   echo
+fi
+if test "$choice" = "b" -o "$choice" = "B"
+then
+   echo "Please type in the path to your BootFile: "
+   echo "Usualy /etc/rc.d/rc.local: "
+   read boot_file
+   echo "Now type in your username: "
+   read username
+   echo "And your password: "
+   read password
+   echo "When i had the program to the BootFile, people will be"
+   echo "enabled to read your password! :|"
+   echo "Do you want me to change the permissions on the BootFile (Y/N)? "
+   read answer
+   echo "Oh k, lets do the Makefile..."
+   rm -rf Makefile
+   echo "# Automatic Makefile, made by configuration script!" >> Makefile
+   echo "all:" >> Makefile
+   echo "	rm -rf core cjbclient" >> Makefile
+   echo "	cc cjbclient.c -o cjbclient" >> Makefile
+   echo "$PWD/cjbclient $username $password" >> "$boot_file"
+   if test "$answer" = "y" -o "$answer" = "Y"
+   then
+      chmod 700 "$boot_file"
+   fi
+   echo "Oh k! all done, just type 'make' to compile client"
+   echo "TIP: execute program with ./cjbclient $username $password"
+fi
+
+
+
+
